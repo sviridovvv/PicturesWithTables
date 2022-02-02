@@ -11,9 +11,15 @@ class ViewController: UIViewController {
     
     let exampleText = ["fisrt", "second", "third", "four"]
     let examplePicture = [UIImage(systemName: "pencil"), UIImage(systemName: "folder"), UIImage(systemName: "doc"), UIImage(systemName: "book")]
-    var imageModel: [Image] = []
-    var images: [UIImage] = []
-    
+    var imageDisplay: [DisplayModel] = []
+    {
+        didSet {
+            if imageDisplay.count % 10 == 0 {
+            updateTableView()
+            }
+        }
+    }
+    let countOfRequest = 2
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -23,11 +29,18 @@ class ViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        getImageModel()
+        addNewImage()
         // Do any additional setup after loading the view.
     }
     
+    func addNewImage() {
+        for _ in 0..<countOfRequest {
+            getImageModel()
+        }
+    }
+    
     func getImageModel() {
+        
         guard let url = URL(string: "https://api.waifu.im/random?many=true") else { return }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -37,16 +50,16 @@ class ViewController: UIViewController {
             }
             
             guard let data = data else { return }
-            //            print(data)
             
             do {
                 let json = try JSONDecoder().decode(Images.self, from: data)
                 for index in json.images {
-                    self.imageModel.append(index)
-                }
-                self.loadImages()
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    var displayModel = DisplayModel()
+                    displayModel.description = index.tags[0].tagDescription
+                    self.loadImage(imageURL: index.url) { (image) in
+                        displayModel.image = image
+                        self.imageDisplay.append(displayModel)
+                    }
                 }
             } catch {
                 print(error)
@@ -55,22 +68,21 @@ class ViewController: UIViewController {
         task.resume()
     }
     
-    func loadImages() {
+    func loadImage(imageURL: String, completion: @escaping (UIImage) -> ()) {
         
-        for index in imageModel {
-            
-            guard let url = URL(string: index.url) else { return }
-            
-//            DispatchQueue.global().async { [ weak self ] in
-                if let data = try? Data(contentsOf: url) {
-                    if let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            self.images.append(image)
-                        }
+        guard let url = URL(string: imageURL) else { return }
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        completion(image)
                     }
                 }
-//            }
-            print(self.images.count)
+            }
+    }
+    
+    func updateTableView() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
 }
@@ -78,21 +90,26 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return imageModel.count
+ 
+        return imageDisplay.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
-        cell.descriptionLabel.text = imageModel[indexPath.row].tags[0].tagDescription
-        cell.displayImage.image = images[indexPath.row]
+
+            let imageWithDesc = self.imageDisplay[indexPath.row]
+            print(indexPath.row)
+                cell.descriptionLabel!.text = imageWithDesc.description
+                cell.displayImage.image = imageWithDesc.image
+        
         return cell
     }
 }
 
 extension ViewController: UITableViewDelegate {
     
-    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //        return 128
-    //    }
+        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 150
+        }
 }

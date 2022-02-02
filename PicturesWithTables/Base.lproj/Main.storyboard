@@ -17,39 +17,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="CkG-vn-3Gb">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="CkG-vn-3Gb">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="140" id="BxQ-0t-wne" customClass="TableViewCell" customModule="PicturesWithTables" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="140"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="150" id="BxQ-0t-wne" customClass="TableViewCell" customModule="PicturesWithTables" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BxQ-0t-wne" id="0xq-xO-39I">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aNG-ID-eto">
-                                                    <rect key="frame" x="12" y="12" width="128" height="116"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="128" id="9R5-k9-jJQ"/>
-                                                        <constraint firstAttribute="width" constant="128" id="nrU-he-8X3"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d3L-RF-Nuq">
-                                                    <rect key="frame" x="152" y="12" width="250" height="116"/>
-                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="20"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="jeM-F6-kbo">
+                                                    <rect key="frame" x="12" y="12" width="390" height="126"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aNG-ID-eto">
+                                                            <rect key="frame" x="0.0" y="0.0" width="128" height="126"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d3L-RF-Nuq">
+                                                            <rect key="frame" x="140" y="0.0" width="250" height="126"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="250" id="RH8-Nd-geN"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="20"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="aNG-ID-eto" firstAttribute="leading" secondItem="0xq-xO-39I" secondAttribute="leading" constant="12" id="D3I-vW-26m"/>
-                                                <constraint firstAttribute="trailing" secondItem="d3L-RF-Nuq" secondAttribute="trailing" constant="12" id="d32-6Z-g2B"/>
-                                                <constraint firstItem="d3L-RF-Nuq" firstAttribute="top" secondItem="0xq-xO-39I" secondAttribute="top" constant="12" id="gkM-7H-fnZ"/>
-                                                <constraint firstAttribute="bottom" secondItem="d3L-RF-Nuq" secondAttribute="bottom" constant="12" id="hFL-Kv-cd8"/>
-                                                <constraint firstAttribute="bottom" secondItem="aNG-ID-eto" secondAttribute="bottom" constant="12" id="kYR-Kg-VIb"/>
-                                                <constraint firstItem="d3L-RF-Nuq" firstAttribute="leading" secondItem="aNG-ID-eto" secondAttribute="trailing" constant="12" id="mfv-21-Tmn"/>
-                                                <constraint firstItem="aNG-ID-eto" firstAttribute="top" secondItem="0xq-xO-39I" secondAttribute="top" constant="12" id="q5i-v2-8zK"/>
+                                                <constraint firstAttribute="bottom" secondItem="jeM-F6-kbo" secondAttribute="bottom" constant="12" id="Wdx-oD-Jcd"/>
+                                                <constraint firstAttribute="trailing" secondItem="jeM-F6-kbo" secondAttribute="trailing" constant="12" id="bx2-VP-OrO"/>
+                                                <constraint firstItem="jeM-F6-kbo" firstAttribute="leading" secondItem="0xq-xO-39I" secondAttribute="leading" constant="12" id="kkT-WI-cz3"/>
+                                                <constraint firstItem="jeM-F6-kbo" firstAttribute="top" secondItem="0xq-xO-39I" secondAttribute="top" constant="12" id="tge-Mm-8bQ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -66,12 +68,6 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="CkG-vn-3Gb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="0yJ-77-wfa"/>
-                            <constraint firstItem="CkG-vn-3Gb" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="1uj-gH-4Kh"/>
-                            <constraint firstItem="CkG-vn-3Gb" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Dap-ry-IM9"/>
-                            <constraint firstAttribute="bottom" secondItem="CkG-vn-3Gb" secondAttribute="bottom" id="J4v-cH-TAE"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="CkG-vn-3Gb" id="Wcq-Xl-P3a"/>

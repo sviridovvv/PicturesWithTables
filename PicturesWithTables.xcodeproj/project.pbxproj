@@ -15,6 +15,7 @@
 		E749C0BF27A57D790083E383 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E749C0BD27A57D790083E383 /* LaunchScreen.storyboard */; };
 		E786BB0527A70BFC00F7E4A8 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E786BB0427A70BFC00F7E4A8 /* TableViewCell.swift */; };
 		E786BB0727A8633200F7E4A8 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E786BB0627A8633200F7E4A8 /* ImageModel.swift */; };
+		E786BB0B27A9F3A500F7E4A8 /* DisplayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E786BB0A27A9F3A500F7E4A8 /* DisplayModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		E749C0C027A57D790083E383 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E786BB0427A70BFC00F7E4A8 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		E786BB0627A8633200F7E4A8 /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
+		E786BB0A27A9F3A500F7E4A8 /* DisplayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				E749C0B627A57D780083E383 /* ViewController.swift */,
 				E786BB0427A70BFC00F7E4A8 /* TableViewCell.swift */,
 				E786BB0627A8633200F7E4A8 /* ImageModel.swift */,
+				E786BB0A27A9F3A500F7E4A8 /* DisplayModel.swift */,
 				E749C0B827A57D780083E383 /* Main.storyboard */,
 				E749C0BB27A57D790083E383 /* Assets.xcassets */,
 				E749C0BD27A57D790083E383 /* LaunchScreen.storyboard */,
@@ -148,6 +151,7 @@
 				E786BB0727A8633200F7E4A8 /* ImageModel.swift in Sources */,
 				E786BB0527A70BFC00F7E4A8 /* TableViewCell.swift in Sources */,
 				E749C0B327A57D780083E383 /* AppDelegate.swift in Sources */,
+				E786BB0B27A9F3A500F7E4A8 /* DisplayModel.swift in Sources */,
 				E749C0B527A57D780083E383 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
