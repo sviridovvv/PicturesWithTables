@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Images: Codable {
+struct ImageModel: Codable {
     let images: [Image]
 }
 

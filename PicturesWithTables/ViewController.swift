@@ -8,18 +8,25 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
     let exampleText = ["fisrt", "second", "third", "four"]
     let examplePicture = [UIImage(systemName: "pencil"), UIImage(systemName: "folder"), UIImage(systemName: "doc"), UIImage(systemName: "book")]
-    var imageDisplay: [DisplayModel] = []
+    var imageModel: [Image] = []
     {
-        didSet {
-            if imageDisplay.count % 10 == 0 {
-            updateTableView()
-            }
+        didSet
+        {
+            //            addToCacheImage()
         }
     }
-    let countOfRequest = 2
+    var cacheImage: [Int : UIImage] = [:]
+    {
+        didSet
+        {
+//            print(cacheImage.count)
+            //                        updateTableView()
+        }
+    }
+    
+    let countOfRequest = 1
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -28,7 +35,6 @@ class ViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
         addNewImage()
         // Do any additional setup after loading the view.
     }
@@ -52,15 +58,11 @@ class ViewController: UIViewController {
             guard let data = data else { return }
             
             do {
-                let json = try JSONDecoder().decode(Images.self, from: data)
+                let json = try JSONDecoder().decode(ImageModel.self, from: data)
                 for index in json.images {
-                    var displayModel = DisplayModel()
-                    displayModel.description = index.tags[0].tagDescription
-                    self.loadImage(imageURL: index.url) { (image) in
-                        displayModel.image = image
-                        self.imageDisplay.append(displayModel)
-                    }
+                    self.imageModel.append(index)
                 }
+                self.updateTableView()
             } catch {
                 print(error)
             }
@@ -68,40 +70,62 @@ class ViewController: UIViewController {
         task.resume()
     }
     
-    func loadImage(imageURL: String, completion: @escaping (UIImage) -> ()) {
-        
-        guard let url = URL(string: imageURL) else { return }
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        completion(image)
-                    }
-                }
-            }
-    }
-    
     func updateTableView() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
     }
+    
+    func loadImage(index: Int, imageURL: String, completion: @escaping (Int, UIImage) -> ()) {
+        
+        let concSync = DispatchQueue(label: "con", attributes: .concurrent)
+        concSync.async {
+            guard let url = URL(string: imageURL) else { return }
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        completion(index, image)
+                    }
+                }
+            }
+        }
+    }
 }
+
 
 extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
- 
-        return imageDisplay.count
+
+        return imageModel.count
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
-
-            let imageWithDesc = self.imageDisplay[indexPath.row]
-            print(indexPath.row)
-                cell.descriptionLabel!.text = imageWithDesc.description
-                cell.displayImage.image = imageWithDesc.image
+        
+        cell.tag = indexPath.row
+        
+        cell.displayImage.layer.cornerRadius = 12
+        cell.displayImage.layer.masksToBounds = true
+        
+        cell.descriptionLabel.text = imageModel[indexPath.row].tags[0].tagDescription
+        cell.displayImage.image = UIImage(systemName: "folder")
+        
+        if cacheImage[indexPath.row] == nil {
+            self.loadImage(index: indexPath.row, imageURL: imageModel[indexPath.row].url) { index, image in
+                //                print("\(cell.tag) : \(indexPath.row)")
+                if (cell.tag == indexPath.row) {
+                    cell.displayImage.image = image
+                }
+                if self.cacheImage[indexPath.row] == nil {
+                    self.cacheImage.updateValue(image, forKey: index)
+                }
+            }
+        } else {
+            cell.displayImage.image = cacheImage[indexPath.row]
+        }
         
         return cell
     }
@@ -109,7 +133,7 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 150
-        }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
 }
