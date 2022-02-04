@@ -8,12 +8,12 @@
 import UIKit
 
 class ViewController: UIViewController {
-    let exampleText = ["fisrt", "second", "third", "four"]
-    let examplePicture = [UIImage(systemName: "pencil"), UIImage(systemName: "folder"), UIImage(systemName: "doc"), UIImage(systemName: "book")]
+    
     var imageModel: [Image] = []
     {
         didSet
         {
+//            print(imageModel.count)
             //            addToCacheImage()
         }
     }
@@ -21,12 +21,13 @@ class ViewController: UIViewController {
     {
         didSet
         {
-//            print(cacheImage.count)
+//            print("newImage")
             //                        updateTableView()
         }
     }
     
     let countOfRequest = 1
+    let maxImages = 120
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -49,7 +50,7 @@ class ViewController: UIViewController {
         
         guard let url = URL(string: "https://api.waifu.im/random?many=true") else { return }
         
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             
             if let error = error {
                 print(error)
@@ -60,9 +61,9 @@ class ViewController: UIViewController {
             do {
                 let json = try JSONDecoder().decode(ImageModel.self, from: data)
                 for index in json.images {
-                    self.imageModel.append(index)
+                    self?.imageModel.append(index)
                 }
-                self.updateTableView()
+                self?.updateTableView()
             } catch {
                 print(error)
             }
@@ -114,19 +115,22 @@ extension ViewController: UITableViewDataSource {
         cell.displayImage.image = UIImage(systemName: "folder")
         
         if cacheImage[indexPath.row] == nil {
-            self.loadImage(index: indexPath.row, imageURL: imageModel[indexPath.row].url) { index, image in
+            self.loadImage(index: indexPath.row, imageURL: imageModel[indexPath.row].url) { [weak self] index, image in
                 //                print("\(cell.tag) : \(indexPath.row)")
                 if (cell.tag == indexPath.row) {
                     cell.displayImage.image = image
                 }
-                if self.cacheImage[indexPath.row] == nil {
-                    self.cacheImage.updateValue(image, forKey: index)
+                if self?.cacheImage[indexPath.row] == nil {
+                    self?.cacheImage.updateValue(image, forKey: index)
                 }
             }
         } else {
             cell.displayImage.image = cacheImage[indexPath.row]
         }
-        
+        print(indexPath.row)
+        if imageModel.count < indexPath.row + 2 && imageModel.count < maxImages {
+            addNewImage()
+        }
         return cell
     }
 }
