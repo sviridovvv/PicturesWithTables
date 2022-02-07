@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JG4-f8-ibP">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Sweet Pictures-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PicturesWithTables" customModuleProvider="target" sceneMemberID="viewController">
@@ -57,6 +57,7 @@
                                         <connections>
                                             <outlet property="descriptionLabel" destination="d3L-RF-Nuq" id="uPV-k4-y5b"/>
                                             <outlet property="displayImage" destination="aNG-ID-eto" id="90h-gr-Bxn"/>
+                                            <segue destination="9at-Ox-Wgu" kind="show" identifier="OpenImage" id="xyj-61-rRt"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -69,13 +70,67 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Sweet Pictures" id="prz-3b-CaV"/>
                     <connections>
                         <outlet property="tableView" destination="CkG-vn-3Gb" id="Wcq-Xl-P3a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="34.782608695652179" y="79.6875"/>
+            <point key="canvasLocation" x="944.92753623188412" y="79.6875"/>
+        </scene>
+        <!--Image View Controller-->
+        <scene sceneID="kww-u5-oET">
+            <objects>
+                <viewController id="9at-Ox-Wgu" customClass="ImageViewController" customModule="PicturesWithTables" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SFi-f8-kd2">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="r1N-BM-GRF">
+                                <rect key="frame" x="0.0" y="223" width="414" height="450"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="450" id="FYH-ZH-IZQ"/>
+                                    <constraint firstAttribute="width" constant="414" id="dmv-jp-60h"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dT6-PU-eso"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="r1N-BM-GRF" firstAttribute="centerY" secondItem="SFi-f8-kd2" secondAttribute="centerY" id="tPl-hd-ydc"/>
+                            <constraint firstItem="r1N-BM-GRF" firstAttribute="centerX" secondItem="SFi-f8-kd2" secondAttribute="centerX" id="yyR-o8-vbi"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="jqs-Kd-EoU"/>
+                    <connections>
+                        <outlet property="displayImage" destination="r1N-BM-GRF" id="hcY-v0-Bmp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1dh-wl-oO2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1634.7826086956522" y="79.6875"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bI8-de-rVW">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JG4-f8-ibP" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8uI-OE-GWn">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="italicSystem" pointSize="20"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="qXk-GI-Bs5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5s2-me-3xK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="255" y="80"/>
         </scene>
     </scenes>
     <resources>

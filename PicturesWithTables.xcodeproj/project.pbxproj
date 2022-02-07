@@ -13,6 +13,7 @@
 		E749C0BA27A57D780083E383 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E749C0B827A57D780083E383 /* Main.storyboard */; };
 		E749C0BC27A57D790083E383 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E749C0BB27A57D790083E383 /* Assets.xcassets */; };
 		E749C0BF27A57D790083E383 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E749C0BD27A57D790083E383 /* LaunchScreen.storyboard */; };
+		E7672D9B27B19F1300BE7AE9 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7672D9A27B19F1300BE7AE9 /* ImageViewController.swift */; };
 		E786BB0527A70BFC00F7E4A8 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E786BB0427A70BFC00F7E4A8 /* TableViewCell.swift */; };
 		E786BB0727A8633200F7E4A8 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E786BB0627A8633200F7E4A8 /* ImageModel.swift */; };
 /* End PBXBuildFile section */
@@ -26,6 +27,7 @@
 		E749C0BB27A57D790083E383 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E749C0BE27A57D790083E383 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E749C0C027A57D790083E383 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7672D9A27B19F1300BE7AE9 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		E786BB0427A70BFC00F7E4A8 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		E786BB0627A8633200F7E4A8 /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,6 +65,7 @@
 				E749C0B227A57D780083E383 /* AppDelegate.swift */,
 				E749C0B427A57D780083E383 /* SceneDelegate.swift */,
 				E749C0B627A57D780083E383 /* ViewController.swift */,
+				E7672D9A27B19F1300BE7AE9 /* ImageViewController.swift */,
 				E786BB0427A70BFC00F7E4A8 /* TableViewCell.swift */,
 				E786BB0627A8633200F7E4A8 /* ImageModel.swift */,
 				E749C0B827A57D780083E383 /* Main.storyboard */,
@@ -148,6 +151,7 @@
 				E786BB0727A8633200F7E4A8 /* ImageModel.swift in Sources */,
 				E786BB0527A70BFC00F7E4A8 /* TableViewCell.swift in Sources */,
 				E749C0B327A57D780083E383 /* AppDelegate.swift in Sources */,
+				E7672D9B27B19F1300BE7AE9 /* ImageViewController.swift in Sources */,
 				E749C0B527A57D780083E383 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

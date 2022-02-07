@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     {
         didSet
         {
-//            print(imageModel.count)
+            //            print(imageModel.count)
             //            addToCacheImage()
         }
     }
@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     {
         didSet
         {
-//            print("newImage")
+            //            print("newImage")
             //                        updateTableView()
         }
     }
@@ -36,8 +36,15 @@ class ViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        addNewImage()
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = "Back"
+        navigationItem.backBarButtonItem = backItem
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        addNewImage()
     }
     
     func addNewImage() {
@@ -97,7 +104,7 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         return imageModel.count
         
     }
@@ -105,14 +112,15 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
-        
+        cell.selectionStyle = .none
         cell.tag = indexPath.row
         
         cell.displayImage.layer.cornerRadius = 12
         cell.displayImage.layer.masksToBounds = true
         
         cell.descriptionLabel.text = imageModel[indexPath.row].tags[0].tagDescription
-        cell.displayImage.image = UIImage(systemName: "folder")
+        cell.displayImage.image = nil
+        cell.displayImage.backgroundColor = .gray
         
         if cacheImage[indexPath.row] == nil {
             self.loadImage(index: indexPath.row, imageURL: imageModel[indexPath.row].url) { [weak self] index, image in
@@ -132,6 +140,26 @@ extension ViewController: UITableViewDataSource {
             addNewImage()
         }
         return cell
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if let indexPath = tableView.indexPathForSelectedRow {
+            if cacheImage[indexPath.row] != nil {
+                return true
+            }
+        }
+        return false
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "OpenImage", let indexPath = tableView.indexPathForSelectedRow {
+                let destination = segue.destination as! ImageViewController
+//                print(indexPath.row)
+                if cacheImage[indexPath.row] != nil {
+                    destination.image = cacheImage[indexPath.row]!
+            }
+        }
     }
 }
 
