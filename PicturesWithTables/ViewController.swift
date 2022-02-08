@@ -10,28 +10,16 @@ import UIKit
 class ViewController: UIViewController {
     
     var imageModel: [Image] = []
-    {
-        didSet
-        {
-            //            print(imageModel.count)
-            //            addToCacheImage()
-        }
-    }
     var cacheImage: [Int : UIImage] = [:]
-    {
-        didSet
-        {
-            //            print("newImage")
-            //                        updateTableView()
-        }
-    }
     
     let countOfRequest = 1
     let maxImages = 120
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         self.tableView.delegate = self
@@ -40,14 +28,18 @@ class ViewController: UIViewController {
         let backItem = UIBarButtonItem()
         backItem.title = "Back"
         navigationItem.backBarButtonItem = backItem
-        // Do any additional setup after loading the view.
+        
+        spinner.hidesWhenStopped = true
+        spinner.startAnimating()
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         addNewImage()
     }
     
     func addNewImage() {
+        
         for _ in 0..<countOfRequest {
             getImageModel()
         }
@@ -56,7 +48,6 @@ class ViewController: UIViewController {
     func getImageModel() {
         
         guard let url = URL(string: "https://api.waifu.im/random?many=true") else { return }
-        
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             
             if let error = error {
@@ -67,6 +58,7 @@ class ViewController: UIViewController {
             
             do {
                 let json = try JSONDecoder().decode(ImageModel.self, from: data)
+                print(json)
                 for index in json.images {
                     self?.imageModel.append(index)
                 }
@@ -79,6 +71,7 @@ class ViewController: UIViewController {
     }
     
     func updateTableView() {
+        
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -98,15 +91,30 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    func stopAnimating() {
+        
+        spinner.stopAnimating()
+        spinner.isHidden = true
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "OpenImage", let indexPath = tableView.indexPathForSelectedRow {
+            let destination = segue.destination as! ImageViewController
+            
+            if cacheImage[indexPath.row] != nil {
+                destination.image = cacheImage[indexPath.row]!
+            }
+        }
+    }
 }
-
 
 extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return imageModel.count
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -124,10 +132,11 @@ extension ViewController: UITableViewDataSource {
         
         if cacheImage[indexPath.row] == nil {
             self.loadImage(index: indexPath.row, imageURL: imageModel[indexPath.row].url) { [weak self] index, image in
-                //                print("\(cell.tag) : \(indexPath.row)")
+                
                 if (cell.tag == indexPath.row) {
                     cell.displayImage.image = image
                 }
+                
                 if self?.cacheImage[indexPath.row] == nil {
                     self?.cacheImage.updateValue(image, forKey: index)
                 }
@@ -136,30 +145,25 @@ extension ViewController: UITableViewDataSource {
             cell.displayImage.image = cacheImage[indexPath.row]
         }
         print(indexPath.row)
+        
         if imageModel.count < indexPath.row + 2 && imageModel.count < maxImages {
             addNewImage()
+        }
+        
+        if imageModel.count == maxImages {
+            stopAnimating()
         }
         return cell
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        
         if let indexPath = tableView.indexPathForSelectedRow {
             if cacheImage[indexPath.row] != nil {
                 return true
             }
         }
         return false
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "OpenImage", let indexPath = tableView.indexPathForSelectedRow {
-                let destination = segue.destination as! ImageViewController
-//                print(indexPath.row)
-                if cacheImage[indexPath.row] != nil {
-                    destination.image = cacheImage[indexPath.row]!
-            }
-        }
     }
 }
 

@@ -21,6 +21,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="6hH-16-piM">
+                                    <rect key="frame" x="0.0" y="217" width="414" height="127"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="150" id="BxQ-0t-wne" customClass="TableViewCell" customModule="PicturesWithTables" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="150"/>
@@ -72,6 +76,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Sweet Pictures" id="prz-3b-CaV"/>
                     <connections>
+                        <outlet property="spinner" destination="6hH-16-piM" id="2y4-Y6-hFg"/>
                         <outlet property="tableView" destination="CkG-vn-3Gb" id="Wcq-Xl-P3a"/>
                     </connections>
                 </viewController>
