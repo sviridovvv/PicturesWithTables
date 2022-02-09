@@ -13,7 +13,7 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PicturesWithTables" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="ImageView" customModule="PicturesWithTables" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -73,12 +73,12 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="spinner" destination="6hH-16-piM" id="2vV-zz-OFz"/>
+                            <outlet property="tableView" destination="CkG-vn-3Gb" id="RBD-TH-IpL"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Sweet Pictures" id="prz-3b-CaV"/>
-                    <connections>
-                        <outlet property="spinner" destination="6hH-16-piM" id="2y4-Y6-hFg"/>
-                        <outlet property="tableView" destination="CkG-vn-3Gb" id="Wcq-Xl-P3a"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

@@ -14,6 +14,9 @@
 		E749C0BC27A57D790083E383 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E749C0BB27A57D790083E383 /* Assets.xcassets */; };
 		E749C0BF27A57D790083E383 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E749C0BD27A57D790083E383 /* LaunchScreen.storyboard */; };
 		E7672D9B27B19F1300BE7AE9 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7672D9A27B19F1300BE7AE9 /* ImageViewController.swift */; };
+		E7672DA227B42F4900BE7AE9 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7672DA127B42F4900BE7AE9 /* ImageView.swift */; };
+		E7672DA627B4637900BE7AE9 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7672DA527B4637900BE7AE9 /* NetworkManager.swift */; };
+		E7672DA827B4681600BE7AE9 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7672DA727B4681600BE7AE9 /* ImageManager.swift */; };
 		E786BB0527A70BFC00F7E4A8 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E786BB0427A70BFC00F7E4A8 /* TableViewCell.swift */; };
 		E786BB0727A8633200F7E4A8 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E786BB0627A8633200F7E4A8 /* ImageModel.swift */; };
 /* End PBXBuildFile section */
@@ -28,6 +31,9 @@
 		E749C0BE27A57D790083E383 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E749C0C027A57D790083E383 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E7672D9A27B19F1300BE7AE9 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		E7672DA127B42F4900BE7AE9 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		E7672DA527B4637900BE7AE9 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		E7672DA727B4681600BE7AE9 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		E786BB0427A70BFC00F7E4A8 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		E786BB0627A8633200F7E4A8 /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,18 +68,53 @@
 		E749C0B127A57D780083E383 /* PicturesWithTables */ = {
 			isa = PBXGroup;
 			children = (
-				E749C0B227A57D780083E383 /* AppDelegate.swift */,
-				E749C0B427A57D780083E383 /* SceneDelegate.swift */,
-				E749C0B627A57D780083E383 /* ViewController.swift */,
-				E7672D9A27B19F1300BE7AE9 /* ImageViewController.swift */,
-				E786BB0427A70BFC00F7E4A8 /* TableViewCell.swift */,
-				E786BB0627A8633200F7E4A8 /* ImageModel.swift */,
-				E749C0B827A57D780083E383 /* Main.storyboard */,
-				E749C0BB27A57D790083E383 /* Assets.xcassets */,
-				E749C0BD27A57D790083E383 /* LaunchScreen.storyboard */,
-				E749C0C027A57D790083E383 /* Info.plist */,
+				E7672D9C27B2F6A000BE7AE9 /* Model */,
+				E7672DA027B2F90300BE7AE9 /* View */,
+				E7672D9E27B2F6BA00BE7AE9 /* Controller */,
+				E7672D9F27B2F88900BE7AE9 /* Resources */,
 			);
 			path = PicturesWithTables;
+			sourceTree = "<group>";
+		};
+		E7672D9C27B2F6A000BE7AE9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E786BB0627A8633200F7E4A8 /* ImageModel.swift */,
+				E7672DA527B4637900BE7AE9 /* NetworkManager.swift */,
+				E7672DA727B4681600BE7AE9 /* ImageManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E7672D9E27B2F6BA00BE7AE9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E7672D9A27B19F1300BE7AE9 /* ImageViewController.swift */,
+				E749C0B627A57D780083E383 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E7672D9F27B2F88900BE7AE9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E749C0B827A57D780083E383 /* Main.storyboard */,
+				E749C0BD27A57D790083E383 /* LaunchScreen.storyboard */,
+				E749C0B227A57D780083E383 /* AppDelegate.swift */,
+				E749C0B427A57D780083E383 /* SceneDelegate.swift */,
+				E749C0BB27A57D790083E383 /* Assets.xcassets */,
+				E749C0C027A57D790083E383 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E7672DA027B2F90300BE7AE9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E786BB0427A70BFC00F7E4A8 /* TableViewCell.swift */,
+				E7672DA127B42F4900BE7AE9 /* ImageView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +191,9 @@
 				E749C0B727A57D780083E383 /* ViewController.swift in Sources */,
 				E786BB0727A8633200F7E4A8 /* ImageModel.swift in Sources */,
 				E786BB0527A70BFC00F7E4A8 /* TableViewCell.swift in Sources */,
+				E7672DA827B4681600BE7AE9 /* ImageManager.swift in Sources */,
+				E7672DA627B4637900BE7AE9 /* NetworkManager.swift in Sources */,
+				E7672DA227B42F4900BE7AE9 /* ImageView.swift in Sources */,
 				E749C0B327A57D780083E383 /* AppDelegate.swift in Sources */,
 				E7672D9B27B19F1300BE7AE9 /* ImageViewController.swift in Sources */,
 				E749C0B527A57D780083E383 /* SceneDelegate.swift in Sources */,
@@ -303,7 +347,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = V55HUZ27QV;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PicturesWithTables/Info.plist;
+				INFOPLIST_FILE = PicturesWithTables/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -333,7 +377,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = V55HUZ27QV;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PicturesWithTables/Info.plist;
+				INFOPLIST_FILE = PicturesWithTables/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
