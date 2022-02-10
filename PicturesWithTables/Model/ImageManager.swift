@@ -9,6 +9,7 @@ import UIKit
 
 extension UIImage {
     
+    // Decreease size of image
     func resize(_ image: UIImage) -> UIImage {
         
         var actualHeight = Float(image.size.height)
@@ -18,16 +19,16 @@ extension UIImage {
         var imgRatio: Float = actualWidth / actualHeight
         let maxRatio: Float = maxWidth / maxHeight
         let compressionQuality: Float = 0.5
-        //90 percent compression
+        // 50 percent compression
         if actualHeight > maxHeight || actualWidth > maxWidth {
             
             if imgRatio < maxRatio {
-                //adjust width according to maxHeight
+                // Adjust width according to maxHeight
                 imgRatio = maxHeight / actualHeight
                 actualWidth = imgRatio * actualWidth
                 actualHeight = maxHeight
             } else if imgRatio > maxRatio {
-                //adjust height according to maxWidth
+                // Adjust height according to maxWidth
                 imgRatio = maxWidth / actualWidth
                 actualHeight = imgRatio * actualHeight
                 actualWidth = maxWidth

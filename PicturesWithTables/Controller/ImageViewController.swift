@@ -17,6 +17,7 @@ class ImageViewController: UIViewController {
         
         super.viewDidLoad()
         
+        // Set default or image from server
         displayImage.backgroundColor = .gray
         displayImage.image = image
     }

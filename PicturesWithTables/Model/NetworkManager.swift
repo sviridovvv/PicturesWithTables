@@ -9,6 +9,7 @@ import UIKit
 
 class NetworkManager {
     
+    // Load image from URL
     func loadImage(index: Int, imageURL: String, completion: @escaping (Int, UIImage) -> ()) {
         
         let concSync = DispatchQueue(label: "con", attributes: .concurrent)
@@ -24,6 +25,7 @@ class NetworkManager {
         }
     }
     
+    // Load data of images from server
     func loadData(completion: @escaping (ImageModel) -> ()) {
         
         guard let url = URL(string: "https://api.waifu.im/random?many=true") else { return }

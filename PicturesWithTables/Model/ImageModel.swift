@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Model of data for data from server
 struct ImageModel: Codable {
     let images: [Image]
 }
