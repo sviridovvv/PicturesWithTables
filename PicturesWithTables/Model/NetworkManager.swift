@@ -10,15 +10,14 @@ import UIKit
 class NetworkManager {
     
     // Load image from URL
-    func loadImage(index: Int, imageURL: String, completion: @escaping (Int, UIImage) -> ()) {
-        
+    func loadImage(imageData: Image, completion: @escaping (Image, UIImage) -> ()) {
         let concSync = DispatchQueue(label: "con", attributes: .concurrent)
         concSync.async {
-            guard let url = URL(string: imageURL) else { return }
+            guard let url = URL(string: imageData.url) else { return }
             if let data = try? Data(contentsOf: url) {
                 if let image = UIImage(data: data) {
                     DispatchQueue.main.async {
-                        completion(index, image)
+                        completion(imageData,image)
                     }
                 }
             }
@@ -26,8 +25,7 @@ class NetworkManager {
     }
     
     // Load data of images from server
-    func loadData(completion: @escaping (ImageModel) -> ()) {
-        
+    func requestData(completion: @escaping (ImageModel) -> ()) {
         guard let url = URL(string: "https://api.waifu.im/random?many=true") else { return }
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             
@@ -38,8 +36,8 @@ class NetworkManager {
             guard let data = data else { return }
             
             do {
-                let json = try JSONDecoder().decode(ImageModel.self, from: data)
-                completion(json)
+                let data = try JSONDecoder().decode(ImageModel.self, from: data)
+                completion(data)
             } catch {
                 print(error)
             }
