@@ -12,6 +12,7 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var displayImage: UIImageView!
     @IBOutlet weak var descriptionLabel: UILabel!
     
+    // Styling cell and set image with description
     func configure(item: ViewModelItem) {
         displayImage.layer.cornerRadius = 12
         displayImage.layer.masksToBounds = true

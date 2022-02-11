@@ -11,9 +11,16 @@ class ViewModel {
     
     weak var delegate: TableViewDataModelDelegate?
     private var networkManager = NetworkManager()
-
-
-    func setDataWithResponse() {
+    var viewModelItems: [ViewModelItem] = []
+    {
+        didSet
+        {
+            delegate?.didRecieveDataUpdate(data: viewModelItems)
+        }
+    }
+    
+    // Get data server from NetworkManager
+    func getDataWithResponse() {
         var imageModel: ImageModel?
         {
             didSet
@@ -27,19 +34,12 @@ class ViewModel {
         }
     }
     
+    // Create items with image and description and send them to ViewController
     func createViewModelItems(data: ImageModel) {
-        var viewModelItems: [ViewModelItem] = []
-        {
-            didSet
-            {
-                delegate?.didRecieveDataUpdate(data: viewModelItems)
-            }
-        }
-        
         for item in data.images {
-                networkManager.loadImage(imageData: item) { imageData, image in
-                    let resizeImage = image.resize(image)
-                    viewModelItems.append(ViewModelItem(image: resizeImage, description: imageData.tags[0].tagDescription))
+            networkManager.loadImage(imageData: item) { imageData, image in
+                let resizeImage = image.resize(image)
+                self.viewModelItems.append(ViewModelItem(image: resizeImage, description: imageData.tags[0].tagDescription))
             }
         }
     }
@@ -47,5 +47,6 @@ class ViewModel {
 
 protocol TableViewDataModelDelegate: AnyObject {
     
+    // Send array of items to ViewController
     func didRecieveDataUpdate(data: [ViewModelItem])
 }

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct ViewModelItem {
+struct ViewModelItem: Hashable {
     
     let image: UIImage
     let description: String

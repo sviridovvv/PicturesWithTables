@@ -9,11 +9,9 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private let request = 2
-    private var countOfImage: Int {
-        return request * 30
-    }
+    var isLoadingMore = false
     
+    private var maxImages: Int = 150
     private var dataArray: [ViewModelItem] = []
     {
         didSet {
@@ -24,8 +22,8 @@ class ViewController: UIViewController {
     
     private let viewModel = ViewModel()
     private var imageView: ImageView! {
-            guard isViewLoaded else { return nil }
-            return (view as! ImageView)
+        guard isViewLoaded else { return nil }
+        return (view as! ImageView)
     }
     
     override func viewDidLoad() {
@@ -34,9 +32,8 @@ class ViewController: UIViewController {
         self.configure()
         imageView.configure()
         setBackNavItem()
-        imageView.startAnimating()
-        imageView.configureRefreshControll()
         addNewData()
+        imageView.startAnimating()
     }
     
     // Change back button in navigation
@@ -48,7 +45,7 @@ class ViewController: UIViewController {
     
     // Get and add new data of images from server
     func addNewData() {
-        viewModel.setDataWithResponse()
+        viewModel.getDataWithResponse()
     }
     
     // Update tableview
@@ -100,10 +97,12 @@ extension ViewController: UITableViewDataSource {
         return dataArray.count
     }
     
+    // Set cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.imageView.tableView.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
         cell.tag = indexPath.row
-
+        
+        print(indexPath.row)
         if cell.tag == indexPath.row {
             cell.configure(item: self.dataArray[indexPath.row])
         }
@@ -116,6 +115,7 @@ extension ViewController: UITableViewDelegate {}
 
 extension ViewController: TableViewDataModelDelegate {
     
+    // Recieve data from ViewModel
     func didRecieveDataUpdate(data: [ViewModelItem]) {
         dataArray = data
     }
@@ -123,10 +123,43 @@ extension ViewController: TableViewDataModelDelegate {
 
 extension ViewController: TableViewDataRefresh {
     
+    // Recieve command for refresh page
     func didRefreshData(isBool: Bool) {
         if isBool && dataArray.count >= 30 {
             dataArray.removeAll()
             addNewData()
+        }
+    }
+}
+
+extension ViewController {
+    
+    // Load new images when it scrolled down
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        let deltaOffset = maximumOffset - currentOffset
+        
+        if deltaOffset <= 0 && !isLoadingMore && dataArray.count < maxImages && !dataArray.isEmpty {
+            loadMoreData()
+            self.imageView.startAnimating()
+        }
+    }
+    
+    // Load new images
+    func loadMoreData() {
+        if !isLoadingMore {
+            isLoadingMore = true
+            self.imageView.stopAnimating()
+            DispatchQueue.global().async {
+                // Fake background loading task for 1 seconds
+                sleep(1)
+                self.addNewData()
+                DispatchQueue.main.async {
+                    self.imageView.tableView.reloadData()
+                }
+                self.isLoadingMore = false
+            }
         }
     }
 }

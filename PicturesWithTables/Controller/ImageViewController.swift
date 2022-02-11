@@ -14,7 +14,6 @@ class ImageViewController: UIViewController {
     @IBOutlet weak var displayImage: UIImageView!
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         // Set image
