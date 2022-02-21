@@ -10,13 +10,14 @@ import UIKit
 class ViewController: UIViewController {
     
     var isLoadingMore = false
+    var refreshControl: UIRefreshControl!
     
     private var maxImages: Int = 150
     private var dataArray: [ViewModelItem] = []
     {
         didSet {
             self.updateTableView()
-            imageView.stopAnimating()
+            stopAnimating()
         }
     }
     
@@ -32,8 +33,9 @@ class ViewController: UIViewController {
         self.configure()
         imageView.configure()
         setBackNavItem()
+        startAnimating()
         addNewData()
-        imageView.startAnimating()
+        configureRefreshControll()
     }
     
     // Change back button in navigation
@@ -46,6 +48,7 @@ class ViewController: UIViewController {
     // Get and add new data of images from server
     func addNewData() {
         viewModel.getDataWithResponse()
+        print("haha")
     }
     
     // Update tableview
@@ -60,7 +63,7 @@ class ViewController: UIViewController {
         if segue.identifier == "OpenImage", let indexPath = imageView.tableView.indexPathForSelectedRow {
             let destination = segue.destination as! ImageViewController
             
-            if dataArray.indices.contains(indexPath.row) == true {
+            if dataArray.indices.contains(indexPath.row) {
                 destination.image = dataArray[indexPath.row].image
             }
         }
@@ -75,18 +78,26 @@ class ViewController: UIViewController {
         }
         return false
     }
+    
+    // Start spinner animating
+    func startAnimating() {
+        imageView.spinner.hidesWhenStopped = true
+        imageView.spinner.startAnimating()
+    }
+    
+    // Stop spinner animating
+    func stopAnimating() {
+        imageView.spinner.stopAnimating()
+    }
 }
 
 extension ViewController {
     
     // Appointment of delegates
     func configure() {
-        DispatchQueue.main.async {
-            self.viewModel.delegate = self
-            self.imageView.delegate = self
-            self.imageView.tableView.delegate = self
-            self.imageView.tableView.dataSource = self
-        }
+        self.viewModel.delegate = self
+        self.imageView.tableView.delegate = self
+        self.imageView.tableView.dataSource = self
     }
 }
 
@@ -102,8 +113,8 @@ extension ViewController: UITableViewDataSource {
         let cell = self.imageView.tableView.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
         cell.tag = indexPath.row
         
-        print(indexPath.row)
-        if cell.tag == indexPath.row {
+        //        print(indexPath.row)
+        if dataArray.indices.contains(indexPath.row) && cell.tag == indexPath.row {
             cell.configure(item: self.dataArray[indexPath.row])
         }
         
@@ -116,19 +127,25 @@ extension ViewController: UITableViewDelegate {}
 extension ViewController: TableViewDataModelDelegate {
     
     // Recieve data from ViewModel
-    func didRecieveDataUpdate(data: [ViewModelItem]) {
-        dataArray = data
+    func didRecieveDataUpdate(data: ViewModelItem) {
+        dataArray.append(data)
     }
 }
 
-extension ViewController: TableViewDataRefresh {
+extension ViewController {
     
-    // Recieve command for refresh page
-    func didRefreshData(isBool: Bool) {
-        if isBool && dataArray.count >= 30 {
-            dataArray.removeAll()
-            addNewData()
-        }
+    // Configure refresh control
+    func configureRefreshControll() {
+        refreshControl = UIRefreshControl()
+        refreshControl.transform = CGAffineTransform(scaleX: 0.65, y: 0.65)
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        imageView.tableView.addSubview(refreshControl)
+    }
+    
+    @objc func refresh(sender: AnyObject) {
+        self.dataArray.removeAll()
+        self.addNewData()
+        refreshControl.endRefreshing()
     }
 }
 
@@ -142,7 +159,7 @@ extension ViewController {
         
         if deltaOffset <= 0 && !isLoadingMore && dataArray.count < maxImages && !dataArray.isEmpty {
             loadMoreData()
-            self.imageView.startAnimating()
+            startAnimating()
         }
     }
     
@@ -150,14 +167,12 @@ extension ViewController {
     func loadMoreData() {
         if !isLoadingMore {
             isLoadingMore = true
-            self.imageView.stopAnimating()
+            stopAnimating()
             DispatchQueue.global().async {
                 // Fake background loading task for 1 seconds
                 sleep(1)
                 self.addNewData()
-                DispatchQueue.main.async {
-                    self.imageView.tableView.reloadData()
-                }
+                self.updateTableView()
                 self.isLoadingMore = false
             }
         }

@@ -11,13 +11,6 @@ class ViewModel {
     
     weak var delegate: TableViewDataModelDelegate?
     private var networkManager = NetworkManager()
-    var viewModelItems: [ViewModelItem] = []
-    {
-        didSet
-        {
-            delegate?.didRecieveDataUpdate(data: viewModelItems)
-        }
-    }
     
     // Get data server from NetworkManager
     func getDataWithResponse() {
@@ -39,7 +32,7 @@ class ViewModel {
         for item in data.images {
             networkManager.loadImage(imageData: item) { imageData, image in
                 let resizeImage = image.resize(image)
-                self.viewModelItems.append(ViewModelItem(image: resizeImage, description: imageData.tags[0].tagDescription))
+                self.delegate?.didRecieveDataUpdate(data: ViewModelItem(image: resizeImage, description: imageData.tags[0].tagDescription))
             }
         }
     }
@@ -48,5 +41,5 @@ class ViewModel {
 protocol TableViewDataModelDelegate: AnyObject {
     
     // Send array of items to ViewController
-    func didRecieveDataUpdate(data: [ViewModelItem])
+    func didRecieveDataUpdate(data: ViewModelItem)
 }
