@@ -13,7 +13,7 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PicturesWithTables" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="ImageView" customModule="PicturesWithTables" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="ImagesView" customModule="PicturesWithTables" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -88,7 +88,7 @@
         <scene sceneID="kww-u5-oET">
             <objects>
                 <viewController id="9at-Ox-Wgu" customClass="ImageViewController" customModule="PicturesWithTables" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="SFi-f8-kd2">
+                    <view key="view" contentMode="scaleToFill" id="SFi-f8-kd2" customClass="OpenImage" customModule="PicturesWithTables" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -106,11 +106,11 @@
                             <constraint firstItem="r1N-BM-GRF" firstAttribute="centerY" secondItem="SFi-f8-kd2" secondAttribute="centerY" id="tPl-hd-ydc"/>
                             <constraint firstItem="r1N-BM-GRF" firstAttribute="centerX" secondItem="SFi-f8-kd2" secondAttribute="centerX" id="yyR-o8-vbi"/>
                         </constraints>
+                        <connections>
+                            <outlet property="displayImage" destination="r1N-BM-GRF" id="vSY-Sz-bvD"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="jqs-Kd-EoU"/>
-                    <connections>
-                        <outlet property="displayImage" destination="r1N-BM-GRF" id="hcY-v0-Bmp"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1dh-wl-oO2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

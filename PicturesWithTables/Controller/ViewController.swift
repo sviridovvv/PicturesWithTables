@@ -12,19 +12,24 @@ class ViewController: UIViewController {
     var isLoadingMore = false
     var refreshControl: UIRefreshControl!
     
-    private var maxImages: Int = 150
+    private let maxRequest: Int = 5
+    private let imagesPerRequest = 30
+    private var requestCount = 0
     private var dataArray: [ViewModelItem] = []
     {
         didSet {
             self.updateTableView()
             stopAnimating()
+            if dataArray.count % imagesPerRequest == 0 {
+                isLoadingMore = false
+            }
         }
     }
     
-    private let viewModel = ViewModel()
-    private var imageView: ImageView! {
+    private lazy var viewModel = getViewModel()
+    private var imageView: ImagesView! {
         guard isViewLoaded else { return nil }
-        return (view as! ImageView)
+        return (view as! ImagesView)
     }
     
     override func viewDidLoad() {
@@ -47,8 +52,9 @@ class ViewController: UIViewController {
     
     // Get and add new data of images from server
     func addNewData() {
-        viewModel.getDataWithResponse()
-        print("haha")
+        if requestCount < maxRequest {
+            viewModel.getDataWithResponse()
+        }
     }
     
     // Update tableview
@@ -64,7 +70,7 @@ class ViewController: UIViewController {
             let destination = segue.destination as! ImageViewController
             
             if dataArray.indices.contains(indexPath.row) {
-                destination.image = dataArray[indexPath.row].image
+                destination.image = self.dataArray[indexPath.row].image
             }
         }
     }
@@ -113,7 +119,6 @@ extension ViewController: UITableViewDataSource {
         let cell = self.imageView.tableView.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
         cell.tag = indexPath.row
         
-        //        print(indexPath.row)
         if dataArray.indices.contains(indexPath.row) && cell.tag == indexPath.row {
             cell.configure(item: self.dataArray[indexPath.row])
         }
@@ -143,8 +148,9 @@ extension ViewController {
     }
     
     @objc func refresh(sender: AnyObject) {
-        self.dataArray.removeAll()
-        self.addNewData()
+        dataArray.removeAll()
+        requestCount = 0
+        addNewData()
         refreshControl.endRefreshing()
     }
 }
@@ -156,25 +162,22 @@ extension ViewController {
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
         let deltaOffset = maximumOffset - currentOffset
-        
-        if deltaOffset <= 0 && !isLoadingMore && dataArray.count < maxImages && !dataArray.isEmpty {
-            loadMoreData()
+        if deltaOffset <= 0 && !dataArray.isEmpty && !isLoadingMore && dataArray.count >= imagesPerRequest && requestCount < maxRequest {
+            self.isLoadingMore = true
             startAnimating()
+            loadMoreData()
         }
     }
     
     // Load new images
     func loadMoreData() {
-        if !isLoadingMore {
-            isLoadingMore = true
-            stopAnimating()
-            DispatchQueue.global().async {
-                // Fake background loading task for 1 seconds
-                sleep(1)
-                self.addNewData()
-                self.updateTableView()
-                self.isLoadingMore = false
-            }
-        }
+        self.addNewData()
+        requestCount += 1
+    }
+}
+
+extension ViewController: GetViewModelProtocol {
+    func getViewModel() -> ViewModel {
+        return ViewModel()
     }
 }

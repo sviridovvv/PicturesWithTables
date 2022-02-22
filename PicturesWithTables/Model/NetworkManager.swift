@@ -45,3 +45,7 @@ class NetworkManager {
         task.resume()
     }
 }
+
+protocol NetworkManagerProtocol {
+    func getNetworkManager() -> NetworkManager
+}

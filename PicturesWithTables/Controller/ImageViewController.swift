@@ -11,12 +11,16 @@ class ImageViewController: UIViewController {
     
     var image: UIImage?
     
-    @IBOutlet weak var displayImage: UIImageView!
+    private var openImage: OpenImage! {
+        guard isViewLoaded else { return nil }
+        return (view as! OpenImage)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set image
-        displayImage.image = image
+        if let image = self.image {
+            openImage.configure(image: image)
+        }
     }
 }

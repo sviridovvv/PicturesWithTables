@@ -9,8 +9,9 @@ import Foundation
 
 class ViewModel {
     
+    private lazy var networkManager = getNetworkManager()
+
     weak var delegate: TableViewDataModelDelegate?
-    private var networkManager = NetworkManager()
     
     // Get data server from NetworkManager
     func getDataWithResponse() {
@@ -21,7 +22,7 @@ class ViewModel {
                 createViewModelItems(data: imageModel!)
             }
         }
-        
+
         networkManager.requestData { data in
             imageModel = data
         }
@@ -42,4 +43,14 @@ protocol TableViewDataModelDelegate: AnyObject {
     
     // Send array of items to ViewController
     func didRecieveDataUpdate(data: ViewModelItem)
+}
+
+extension ViewModel: NetworkManagerProtocol {
+    func getNetworkManager() -> NetworkManager {
+        return NetworkManager()
+    }
+}
+
+protocol GetViewModelProtocol {
+    func getViewModel() -> ViewModel
 }
