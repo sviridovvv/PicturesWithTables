@@ -7,8 +7,8 @@
 
 import UIKit
 
-class NetworkManager {
-    
+class NetworkManager: NetworkManagerProtocol {
+    var a = 4
     // Load image from URL
     func loadImage(imageData: Image, completion: @escaping (Image, UIImage) -> ()) {
         let concSync = DispatchQueue(label: "con", attributes: .concurrent)
@@ -25,7 +25,7 @@ class NetworkManager {
     }
     
     // Load data of images from server
-    func requestData(completion: @escaping (ImageModel) -> ()) {
+    func sendRequest(completion: @escaping (ImageModel) -> ()) {
         guard let url = URL(string: "https://api.waifu.im/random?many=true") else { return }
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             
@@ -47,11 +47,7 @@ class NetworkManager {
 }
 
 protocol NetworkManagerProtocol {
-    func getNetworkManager() -> NetworkManagerProtocol
-}
-
-extension NetworkManager: NetworkManagerProtocol {
-    func getNetworkManager() -> NetworkManagerProtocol {
-        return NetworkManager()
-    }
+    
+    func loadImage(imageData: Image, completion: @escaping (Image, UIImage) -> ())
+    func sendRequest(completion: @escaping (ImageModel) -> ())
 }

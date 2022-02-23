@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private lazy var viewModel = getViewModel() as! ViewModel
+    private var viewModel: ViewModel!
     private var imageView: ImagesView! {
         guard isViewLoaded else { return nil }
         return (view as! ImagesView)
@@ -34,14 +34,12 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.configure()
         imageView.configure()
         setBackNavItem()
         startAnimating()
         addNewData()
         configureRefreshControll()
-        
     }
     
     // Change back button in navigation
@@ -100,8 +98,11 @@ class ViewController: UIViewController {
 
 extension ViewController {
     
-    // Appointment of delegates
+    // Set view model and appointment of delegates
     func configure() {
+        let networkManager = NetworkManager()
+        self.viewModel = ViewModel(networkManager: networkManager)
+        
         self.viewModel.delegate = self
         self.imageView.tableView.delegate = self
         self.imageView.tableView.dataSource = self
@@ -174,11 +175,5 @@ extension ViewController {
     func loadMoreData() {
         self.addNewData()
         requestCount += 1
-    }
-}
-
-extension ViewController: ViewModelProtocol {
-    func getViewModel() -> ViewModelProtocol {
-        return ViewModel()
     }
 }
