@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private lazy var viewModel = getViewModel()
+    private lazy var viewModel = getViewModel() as! ViewModel
     private var imageView: ImagesView! {
         guard isViewLoaded else { return nil }
         return (view as! ImagesView)
@@ -41,6 +41,7 @@ class ViewController: UIViewController {
         startAnimating()
         addNewData()
         configureRefreshControll()
+        
     }
     
     // Change back button in navigation
@@ -176,8 +177,8 @@ extension ViewController {
     }
 }
 
-extension ViewController: GetViewModelProtocol {
-    func getViewModel() -> ViewModel {
+extension ViewController: ViewModelProtocol {
+    func getViewModel() -> ViewModelProtocol {
         return ViewModel()
     }
 }

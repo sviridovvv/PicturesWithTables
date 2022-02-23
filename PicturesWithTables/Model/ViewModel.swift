@@ -9,7 +9,7 @@ import Foundation
 
 class ViewModel {
     
-    private lazy var networkManager = getNetworkManager()
+    private lazy var networkManager = getNetworkManager() as! NetworkManager
 
     weak var delegate: TableViewDataModelDelegate?
     
@@ -22,7 +22,7 @@ class ViewModel {
                 createViewModelItems(data: imageModel!)
             }
         }
-
+        
         networkManager.requestData { data in
             imageModel = data
         }
@@ -45,12 +45,18 @@ protocol TableViewDataModelDelegate: AnyObject {
     func didRecieveDataUpdate(data: ViewModelItem)
 }
 
-extension ViewModel: NetworkManagerProtocol {
-    func getNetworkManager() -> NetworkManager {
-        return NetworkManager()
+protocol ViewModelProtocol {
+    func getViewModel() -> ViewModelProtocol
+}
+
+extension ViewModel: ViewModelProtocol {
+    func getViewModel() -> ViewModelProtocol {
+        return ViewModel()
     }
 }
 
-protocol GetViewModelProtocol {
-    func getViewModel() -> ViewModel
+extension ViewModel: NetworkManagerProtocol {
+    func getNetworkManager() -> NetworkManagerProtocol {
+        return NetworkManager()
+    }
 }

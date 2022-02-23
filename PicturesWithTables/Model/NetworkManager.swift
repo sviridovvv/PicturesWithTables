@@ -47,5 +47,11 @@ class NetworkManager {
 }
 
 protocol NetworkManagerProtocol {
-    func getNetworkManager() -> NetworkManager
+    func getNetworkManager() -> NetworkManagerProtocol
+}
+
+extension NetworkManager: NetworkManagerProtocol {
+    func getNetworkManager() -> NetworkManagerProtocol {
+        return NetworkManager()
+    }
 }
